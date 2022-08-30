@@ -7,22 +7,22 @@ const {GraphQLObjectType, GraphQLInputObjectType, GraphQLNonNull, GraphQLString,
 const { Model } = require('objection');
 const Knex = require('knex');
 
-const Account = require("./models/Account");
-const AccountAlias = require("./models/AccountAlias");
-const Bucket = require("./models/Bucket");
-const BucketHolding = require("./models/BucketHolding");
-const Category = require("./models/Category");
-const CategoryRule = require("./models/CategoryRule");
-const Month = require("./models/Month");
-const MonthBudget = require("./models/MonthBudget");
-const Priority = require("./models/Priority");
-const RuleColumn = require("./models/RuleColumn");
-const RuleConstraint = require("./models/RuleConstraint");
-const Statement = require("./models/Statement");
-const StatementTransaction = require("./models/StatementTransaction");
-const Status = require("./models/Status");
-const Transaction = require("./models/Transaction");
-const TransactionBucket = require("./models/TransactionBucket");
+const Account = require("./src/models/Account");
+const AccountAlias = require("./src/models/AccountAlias");
+const Bucket = require("./src/models/Bucket");
+const BucketHolding = require("./src/models/BucketHolding");
+const Category = require("./src/models/Category");
+const CategoryRule = require("./src/models/CategoryRule");
+const Month = require("./src/models/Month");
+const MonthBudget = require("./src/models/MonthBudget");
+const Priority = require("./src/models/Priority");
+const RuleColumn = require("./src/models/RuleColumn");
+const RuleConstraint = require("./src/models/RuleConstraint");
+const Statement = require("./src/models/Statement");
+const StatementTransaction = require("./src/models/StatementTransaction");
+const Status = require("./src/models/Status");
+const Transaction = require("./src/models/Transaction");
+const TransactionBucket = require("./src/models/TransactionBucket");
 
 // Knex
 const knex = Knex({
@@ -192,7 +192,7 @@ Model.knex(knex);
 const models = [ Account, AccountAlias, Bucket, BucketHolding, Category, CategoryRule, Month, MonthBudget, Priority, RuleColumn, RuleConstraint, Statement, StatementTransaction, Status, Transaction, TransactionBucket ]
 const graphQLSchema = graphQlBuilder().allModels(models).extendWithMutations(mutationType).build()
 
-fs.writeFile('api/graphql-schema.graphql', printSchema(graphQLSchema), err => {
+fs.writeFile('graphql-schema.graphql', printSchema(graphQLSchema), err => {
     if (err) {
         console.error(err)
         return
@@ -225,7 +225,7 @@ var corsOptions = {
     origin: "http://localhost:8080"
 };
 app.use(cors(corsOptions));
-const initRoutes = require("../ui/src/express/routes");
+const initRoutes = require("./src/express/routes");
 app.use(express.urlencoded({ extended: true }));
 initRoutes(app);
 let port = 8081;
