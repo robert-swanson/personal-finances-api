@@ -1,5 +1,8 @@
 const { ApolloServer, gql } = require('apollo-server');
 const fs = require('fs')
+
+const uiserver = 'https://rswanson-3141-2lou526cjq-uc.a.run.app'
+
 const graphQlBuilder = require('objection-graphql').builder;
 const {GraphQLObjectType, GraphQLInputObjectType, GraphQLNonNull, GraphQLString, GraphQLInt, GraphQLBoolean,
     GraphQLList, printSchema, GraphQLFloat
@@ -210,7 +213,7 @@ const server =
         },
     });
 
-server.listen().then(({ url }) => {
+server.listen(8080).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
 
@@ -221,8 +224,8 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 global.__basedir = __dirname;
-var corsOptions = {
-    origin: "http://localhost:8080"
+let corsOptions = {
+    origin: uiserver + ":8080"
 };
 app.use(cors(corsOptions));
 const initRoutes = require("./src/express/routes");
